@@ -1,0 +1,45 @@
+﻿@model  Book_Maintain.Models.BookInsert
+@{
+	ViewBag.Title = "InsertBook";
+}
+
+<div class="container mt-5">
+	<h3>新增畫面</h3>
+	
+	<form id="SearchForm" action="/Book/InsertBook" method="post">
+		@Html.AntiForgeryToken()
+		<ul class="fieldlist">
+			<li>
+				@Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookName, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookAuthor, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookAuthor, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookPublisher, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookPublisher, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextAreaFor(model => model.Note, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BoughtDate, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BoughtDate, new { @type = "datetime-local", @datatype = "datetime", @class = "form-control col-md-4" })
+				@Html.ValidationMessageFor(model => model.BoughtDate, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookClass, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.DropDownListFor(model => model.BookClass, (List<SelectListItem>)ViewBag.BookClass, "請選擇...", htmlAttributes: new { @class = "form-control col-md-3" })
+				@Html.ValidationMessageFor(model => model.BookClass, "", new { @class = "text-danger" })
+			</li>
+			<button type="submit" class="btn btn-dark">存檔</button>
+		</ul>
+	</form>
+</div>

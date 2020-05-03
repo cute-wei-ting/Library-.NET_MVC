@@ -1,0 +1,21 @@
+﻿.tb{
+	max-height:400px;
+	overflow-y: scroll;
+}
+.fieldlist {
+	margin: 0 0 3px;
+	padding: 0;
+}
+
+.fieldlist li {
+	list-style: none;
+	padding-bottom: 10px;
+}
+
+.fieldlist label {
+	display: block;
+	padding-bottom: 1px;
+	font-size: 13px;
+	font-weight: 300;
+	color: #444;
+}

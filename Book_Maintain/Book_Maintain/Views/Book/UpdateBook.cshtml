@@ -1,0 +1,99 @@
+﻿@model  Book_Maintain.Models.BookUpdate
+@{
+	ViewBag.Title = "UpdateBook";
+}
+
+<div class="container mt-5">
+	<h3>修改畫面</h3>
+
+	<form id="SearchForm" action="/Book/UpdateBook" method="post">
+		<ul class="fieldlist">
+			<li>
+				@Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookName, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookAuthor, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookAuthor, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookPublisher, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.BookPublisher, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.Note, new { @class = "form-control col-md-2" })
+				@Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BoughtDate, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.TextBoxFor(model => model.BoughtDate, new { @class = "form-control col-md-4" })
+				@Html.ValidationMessageFor(model => model.BoughtDate, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookClassId, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.DropDownListFor(model => model.BookClassId, (List<SelectListItem>)ViewBag.BookClass, htmlAttributes: new { @class = "form-control col-md-3" })
+				@Html.ValidationMessageFor(model => model.BookClassId, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.DropDownListFor(model => model.BookStatusId, (List<SelectListItem>)ViewBag.BookStatus, htmlAttributes: new { @class = "form-control col-md-3" })
+				@Html.ValidationMessageFor(model => model.BookStatusId, "", new { @class = "text-danger" })
+			</li>
+			<li>
+				@Html.LabelFor(model => model.BookKeeperId, htmlAttributes: new { @class = "control-label col-md-2" })
+				@Html.DropDownListFor(model => model.BookKeeperId, (List<SelectListItem>)ViewBag.BookKeeper, htmlAttributes: new { @class = "form-control col-md-3" })
+				@Html.ValidationMessageFor(model => model.BookKeeperId, "", new { @class = "text-danger" })
+			</li>
+		</ul>
+		@Html.Hidden("BookID")
+		@Html.Hidden("IniStatus")
+		<button id="UpdateSave" type="submit" class="btn btn-dark">存檔</button>
+		<button id="UpdateDel" type="button" class="btn btn-dark">刪除</button>
+	</form>
+</div>
+@* MODEL BINDING 跟 List<SelectListItem> value 要對到它就會自動選擇到對的selected*@
+<script>
+	$(document).ready(function () {
+
+		bookstatus();//借閱人跟借閱狀態關係
+		$("#UpdateSave").click(function () {
+			if (($("#BookStatusId").val() === "B" || $("#BookStatusId").val() === "C") && ($("#BookKeeperId").val() === "" || $("#BookKeeperId").val() === null)) {
+				alert("此借閱狀態,借閱人不能為空");
+			}
+		});
+		//Del
+		$("#UpdateDel").click(function () {
+			if (confirm("是否刪除")) {
+				$.ajax({
+					type: "POST",
+					url: "/Book/UpdateBookDel",
+					data: {id:$("#BookID").val()},
+					dataType: "json",
+					success: function (response) {
+						alert(response);
+						var address = "/Book/Index";
+						location.replace(address);
+					}, error: function (error) {
+						alert("刪除失敗");
+					}
+				});
+			}
+		});
+
+		$("#BookStatusId").change(bookstatus);
+	});
+	
+	function bookstatus() {
+		if ($("#BookStatusId").val() === "A" || $("#BookStatusId").val() === "U") {
+			$("#BookKeeperId").val("");
+			$("#BookKeeperId").attr("disabled",true);
+		}
+		else {
+			$("#BookKeeperId").attr("disabled", false);
+		}
+	}
+</script>

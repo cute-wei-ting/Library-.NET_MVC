@@ -1,0 +1,40 @@
+﻿
+@{
+	ViewBag.Title = "BookDetail";
+}
+<div class="container mt-5">
+	<h2>明細畫面</h2>
+
+<div id="detailtbcontainer" >
+	<table id="DetailShowTable" class="table table-sm mt-5 ml-2">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">書名</th>
+				<th scope="col">作者</th>
+				<th scope="col">出版商</th>
+				<th scope="col">內容簡介</th>
+				<th scope="col">購書日期</th>
+				<th scope="col">圖書類別</th>
+				<th scope="col">借閱人</th>
+				<th scope="col">借閱狀態</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr>
+				<td>@ViewBag.bookdetaildisplay.BookName</td>
+				<td>@ViewBag.bookdetaildisplay.BookAuthor</td>
+				<td>@ViewBag.bookdetaildisplay.BookPublisher</td>
+				<td>@ViewBag.bookdetaildisplay.Note</td>
+				<td>@ViewBag.bookdetaildisplay.BoughtDate</td>
+				<td>@ViewBag.bookdetaildisplay.BookClassId</td>
+				<td>@ViewBag.bookdetaildisplay.BookStatusId</td>
+				<td>@ViewBag.bookdetaildisplay.BookKeeperId</td>
+				<td>@Html.ActionLink("編輯", "UpdateBook", new { id = ViewBag.bookdetaildisplay.BookID })</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+
